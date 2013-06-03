@@ -1,0 +1,17 @@
+package ru.monitor.model
+
+/**
+ * Описание задачи проверки
+ *
+ * @since 0.1
+ */
+class CheckRun {
+
+    Date runDate
+
+    static belongsTo = [group: MonitorGroup, serverItem: ServerItem]
+    static hasMany = [checkFiles: CheckFile]
+
+    static constraints = {
+    }
+}
