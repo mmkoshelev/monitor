@@ -26,8 +26,14 @@ class HelpersTagLib {
                 <span class="aui-icon icon-close" role="button" tabindex="0"></span>
             </div>"""
         def renderTemplate = { String value, Object msg ->
-            if (msg && msg instanceof String) {
-                out << MessageFormat.format(template, value, msg)
+            if (msg) {
+                if (msg instanceof String) {
+                    out << MessageFormat.format(template, value, msg)
+                } else if (msg instanceof List) {
+                    for(m in msg) {
+                        out << MessageFormat.format(template, value, m)
+                    }
+                }
             }
         }
 

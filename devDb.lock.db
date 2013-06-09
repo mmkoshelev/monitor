@@ -1,5 +1,5 @@
 #FileLock
-#Sun Jun 02 22:55:21 MSK 2013
-id=13f063e6bc2f5b97ce9a7787ba1ed94cac2f82f4fe3
+#Wed Jun 05 22:55:58 MSK 2013
+id=13f15b21133218240bc5b22072af313a7f36e542c4b
 method=file
-server=192.168.0.101\:58181
+server=localhost\:49890
