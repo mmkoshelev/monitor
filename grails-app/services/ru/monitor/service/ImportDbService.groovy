@@ -19,7 +19,6 @@ class ImportDbService {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             importMonitorGroup(serverItem, sql)
-            importCheckRun(sql)
         } finally {
             sql.close()
         }
@@ -39,7 +38,7 @@ class ImportDbService {
         }
     }
 
-    def importCheckRun(Sql sql) {
+    def importCheckRun(MonitorGroup group, Sql sql) {
 
     }
 
