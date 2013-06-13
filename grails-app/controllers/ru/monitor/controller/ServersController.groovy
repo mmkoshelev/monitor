@@ -14,6 +14,8 @@ class ServersController {
 
     static allowedMethods = [newserver: "POST", importdb: "POST"]
 
+    def importDbService
+
     def index() {
         try {
             def servers = ServerItem.list(sort: "name")
@@ -49,6 +51,10 @@ class ServersController {
             File tmp = new File(UUID.randomUUID().toString() + ".db")
             try {
                 dbfile.transferTo(tmp)
+                def serverItem = ServerItem.findByCode(params.server)
+                if (serverItem) {
+                    importDbService.importDb(serverItem, tmp.absolutePath)
+                }
             } catch (IOException ex) {
                 log.error("Ошибка работы с файлами", ex)
             } finally{
