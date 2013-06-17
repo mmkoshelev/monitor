@@ -65,20 +65,3 @@ class ServersController {
         return redirect(action: "index")
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

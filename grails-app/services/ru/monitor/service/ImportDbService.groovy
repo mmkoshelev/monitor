@@ -1,9 +1,7 @@
 package ru.monitor.service
 
 import groovy.sql.Sql
-import org.springframework.transaction.TransactionStatus
 import ru.monitor.db.SQLiteConnectionFactory
-import ru.monitor.model.MonitorGroup
 import ru.monitor.model.ServerItem
 
 /**
@@ -18,28 +16,36 @@ class ImportDbService {
     def importDb(ServerItem serverItem, String filePath) {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
-            importMonitorGroup(serverItem, sql)
+            def monitorGroups = importMonitorGroup(sql)
+            def checkRuns = importCheckRun(sql)
         } finally {
             sql.close()
         }
     }
 
-    def importMonitorGroup(ServerItem serverItem, Sql sql) {
-        MonitorGroup.withTransaction { TransactionStatus status ->
-            try {
-                sql.eachRow("SELECT grpname FROM mvz_group") {
-                    MonitorGroup mg = new MonitorGroup(name: it.grpname)
-                    serverItem.addToGroups(mg)
-                    mg.save()
-                }
-            } catch (Exception e) {
-                status.setRollbackOnly()
+    private static importMonitorGroup(Sql sql) {
+        def list = []
+        sql.eachRow("SELECT grpid, grpname FROM mvz_group") {
+            def row = it.toRowResult()
+            row.groups = []
+            sql.eachRow("SELECT g.grpname " +
+                        "FROM mvz_link gl INNER JOIN  mvz_group g ON gl.grp2 = g.grpid " +
+                        "WHERE gl.grp1 = ?", [row.grpid]) {
+                row.groups << it.grpname
             }
+            list << row
         }
+
+        return list
     }
 
-    def importCheckRun(MonitorGroup group, Sql sql) {
+    private static importCheckRun(Sql sql) {
+        def list = []
+        sql.eachRow("SELECT runid, grpid FROM mvz_chkrun") {
+            list << it.toRowResult()
+        }
 
+        return list
     }
 
 }
