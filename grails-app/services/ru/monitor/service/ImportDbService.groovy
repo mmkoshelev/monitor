@@ -17,12 +17,14 @@ class ImportDbService {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             def monitorGroups = getMonitorGroups(sql)
-            def checkRuns = getCheckRuns(sql)
             def monitorItems = getMonitorItems(sql)
             def patts = getPatts(sql)
             def etalonDirs = getEtalonDirs(sql)
             def etalonFiles = getEtalonFiles(sql)
             def etalonAces = getEtalonAces(sql)
+            def checkRuns = getCheckRuns(sql)
+            def checkFiles = getCheckFiles(sql)
+            def checkAces = getCheckAces(sql)
         } finally {
             sql.close()
         }
@@ -95,6 +97,28 @@ class ImportDbService {
         sql.eachRow("""SELECT a.eid, a.acemode, 0 as diff, a.acevalue, t.uname, NULL as trustee
                        FROM mvz_eace a LEFT OUTER JOIN mvz_trustee t
                            ON a.trustee = t.uid""") {
+            list << it.toRowResult()
+        }
+
+        return list
+    }
+
+    private static getCheckFiles(Sql sql) {
+        def list = []
+        sql.eachRow("SELECT ceid, dirid, fname, status FROM mvz_chkent") {
+            list << it.toRowResult()
+        }
+
+        return list
+    }
+
+    private static getCheckAces(Sql sql) {
+        def list = []
+        sql.eachRow("""SELECT a.ceid, a.acemode, a.cdiff, a.acevalue, t.uname, ct.uname as trustee
+                       FROM mvz_chkace a LEFT OUTER JOIN mvz_trustee t
+                           ON a.trustee = t.uid
+                       LEFT OUTER JOIN mvz_chktrust ct
+                           ON a.trustee = ct.uid""") {
             list << it.toRowResult()
         }
 

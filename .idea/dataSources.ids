@@ -840,7 +840,7 @@
       <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="true" jdbcType="4"/>
     </table>
     <table name="CHECK_ACE" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfM0Q0NENGMEVfRDdFMV80NTU3X0I4NkVfODYyNEJBMDI4M0IzKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfN0I2QTFDODdfODhGMl80NzE1X0EwOEVfOTdCRDhGNkM3MzBEKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="CHECK_FILE_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="DIFF" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
@@ -852,13 +852,11 @@
       <index name="FK17C6C8CC4C092147_INDEX_B" unique="false" columns="CHECK_FILE_ID"/>
     </table>
     <table name="CHECK_FILE" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNzI0NzgyMDdfQjVENl80NzM2Xzk5MENfMzU0RUUwRjc0Njc4KQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfREVFRTI4QURfMDNGN180RTQ3XzhDM0RfQUU3MEM0NzEyOUJEKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="CHECK_RUN_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="ETALON_DIR_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
-      <column name="HASH" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
       <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
-      <column name="SIZE" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="STATUS" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
       <primary-key name="CONSTRAINT_F" columns="ID"/>
       <foreign-key name="FKE114AE53F561B2D" columns="CHECK_RUN_ID" ref-table="CHECK_RUN" ref-schema="PUBLIC" ref-catalog="DEVDB" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -868,7 +866,7 @@
       <index name="FKE114AE53F7D3EE03_INDEX_F" unique="false" columns="ETALON_DIR_ID"/>
     </table>
     <table name="CHECK_RUN" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNDE3QUM2MUJfMUU1N180Q0NDX0EyNkNfMTgwODgzRjdBRjRBKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMDVCNEFBQzZfNUY3M180MTVEX0JCRkJfNDAyODJBNjREQ0I0KQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="GROUP_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="RUN_DATE" sqlType="TIMESTAMP" length="23" precision="10" nullable="false" jdbcType="93"/>
@@ -881,7 +879,7 @@
       <index name="FK17C70AD4819EA84_INDEX_B" unique="false" columns="GROUP_ID"/>
     </table>
     <table name="ETALON_ACE" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRTUxOUE3RkFfNEEwRV80NTc3Xzg3MjhfOTBDMzdBNTQxOTcwKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQTcxN0I5NURfQjFGNV80Q0VEX0I1NTNfMEJDRUIwQTYwNkVBKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="DIFF" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="ETALON_FILE_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
@@ -893,7 +891,7 @@
       <index name="FK1139BBD6C2539F1_INDEX_1" unique="false" columns="ETALON_FILE_ID"/>
     </table>
     <table name="ETALON_DIR" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQzdDRUJFNkVfQzJFMV80RTdEX0IzMDBfRDhERDFEMjA3OThFKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRTRDOTUzMDNfNjk3Nl80NjNGX0FCQ0FfQTA1NkQyNDk2QkY3KQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="GROUP_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -904,7 +902,7 @@
       <index name="FK113A7C7819EA84_INDEX_1" unique="false" columns="GROUP_ID"/>
     </table>
     <table name="ETALON_FILE" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRTMwNDAzMjRfNkQ3Nl80NjQ1XzgwMjlfMzk2RDcwNThGQjBEKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQUI3QTRBOEJfOEVCMF80QTlEXzhCNUVfQzgzREM2Rjg4MTlFKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="ETALON_DIR_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="HASH" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -916,7 +914,7 @@
       <index name="FK21623982F7D3EE03_INDEX_A" unique="false" columns="ETALON_DIR_ID"/>
     </table>
     <table name="MONITOR_GROUP" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfODUxRDI2MUFfQzEyQ180RUY1X0JEODdfMzVGOEYyOERCM0I4KQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMzJBMTFEOEZfQUJCRF80NkJDXzk3NTFfNDE0Mzk0M0Y4QTI5KQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
       <column name="SERVER_ITEM_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
@@ -938,7 +936,7 @@
       <index name="FKDD444335C424C3C9_INDEX_E" unique="false" columns="MONITOR_GROUP_ID"/>
     </table>
     <table name="MONITOR_ITEM" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRkY2RjQ2OThfQjU0RV80QzE3XzhBQzVfMUVGMEE2ODJFRUVGKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMTkyMTEyQjlfNTZDN180MjE3X0I5RjZfNDBCOEExOEE4QTNGKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="GROUP_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="PATH" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -948,7 +946,7 @@
       <index name="FK673DBED8819EA84_INDEX_F" unique="false" columns="GROUP_ID"/>
     </table>
     <table name="PATT" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRjJCNzZGMkJfRjJDQV80QzA0XzhENzJfQjc1MjYwRkIwN0JEKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMDg5MkZEMURfMzZFQV80OEUyXzgxOERfM0VEMkY4MUI2NEExKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="FLAGS" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="MONITOR_ITEM_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
@@ -958,7 +956,7 @@
       <index name="FK346431D612D48B_INDEX_2" unique="false" columns="MONITOR_ITEM_ID"/>
     </table>
     <table name="SERVER_ITEM" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQjREOTE4QzVfRDhCNl80NTM3X0EyQjJfNjhBMzUwREY1ODcxKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNENCQjlDNTZfQ0Y2Q180REJCXzg0Q0JfMjc2RTIwNzFBOTk0KQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="CODE" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
       <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -967,7 +965,7 @@
       <exported-key name="FK805D2B5A29BD8D25" table="MONITOR_GROUP" schema="PUBLIC" catalog="DEVDB" columns="SERVER_ITEM_ID"/>
     </table>
     <table name="USER" schema="PUBLIC" catalog="DEVDB" type="TABLE">
-      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNTRFMDlERjlfRjRENF80MTg0Xzg2QjhfMUE3OEExRTdCQTIyKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQTE0RjFDMzNfRjlGOF80M0U4X0FBMjZfQ0FDRjgzRTE1MUFBKQ==" autoIncrement="true"/>
       <column name="VERSION" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="AGE" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="FIRST_NAME" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>

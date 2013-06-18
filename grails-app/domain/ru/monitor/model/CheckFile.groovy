@@ -8,8 +8,6 @@ package ru.monitor.model
 class CheckFile {
 
     String name
-    String hash
-    Integer size
     Integer status
 
     static belongsTo = [checkRun: CheckRun, etalonDir: EtalonDir]
