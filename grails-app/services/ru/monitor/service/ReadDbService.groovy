@@ -11,6 +11,12 @@ class ReadDbService {
 
     static transactional = false
 
+    /**
+     * Получение всех групп проверки
+     *
+     * @param sql БД
+     * @return [grpid, grpname, [groups]]
+     */
     def getMonitorGroups(Sql sql) {
         def list = []
         sql.eachRow("SELECT grpid, grpname FROM mvz_group") {

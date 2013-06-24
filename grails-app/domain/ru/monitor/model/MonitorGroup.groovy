@@ -13,5 +13,11 @@ class MonitorGroup {
     static belongsTo = [serverItem: ServerItem]
 
     static constraints = {
+        name blank: false, unique: ["serverItem"]
+    }
+
+    static mapping = {
+        name index: "mg_name_si_idx"
+        serverItem index:  "mg_name_si_idx"
     }
 }
