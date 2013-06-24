@@ -8,6 +8,7 @@ package ru.monitor.model
 class MonitorItem {
 
     String path
+    Long ipos
 
     static belongsTo = [group: MonitorGroup]
     static hasMany = [patts: Patt]

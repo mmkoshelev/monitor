@@ -8,6 +8,7 @@ package ru.monitor.model
 class MonitorGroup {
 
     String name
+    Long etalonId
 
     static hasMany = [groups: MonitorGroup, monitorItems: MonitorItem, etalonDirs: EtalonDir]
     static belongsTo = [serverItem: ServerItem]

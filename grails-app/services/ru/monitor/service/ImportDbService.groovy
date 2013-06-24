@@ -3,6 +3,7 @@ package ru.monitor.service
 import groovy.sql.Sql
 import ru.monitor.db.SQLiteConnectionFactory
 import ru.monitor.model.MonitorGroup
+import ru.monitor.model.MonitorItem
 import ru.monitor.model.ServerItem
 
 /**
@@ -18,8 +19,8 @@ class ImportDbService {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             importMonitorGroups(serverItem, sql)
+            importMoitorItems(serverItem, sql)
 
-//            def monitorItems = readDbService.getMonitorItems(sql)
 //            def patts = readDbService.getPatts(sql)
 //            def etalonDirs = readDbService.getEtalonDirs(sql)
 //            def etalonFiles = readDbService.getEtalonFiles(sql)
@@ -33,10 +34,10 @@ class ImportDbService {
     }
 
     /**
-     * Импортируем группы проверки для сервера
+     * Импорт групп проверки для сервера
      *
+     * @param serverItem Сервер проверки
      * @param sql БД
-     * @param monitorGroups Набор групп
      * @return
      */
     def importMonitorGroups(ServerItem serverItem, Sql sql) {
@@ -44,12 +45,12 @@ class ImportDbService {
         // Создаем все группы
         def newGroups = []
         monitorGroups.each {
-            newGroups << new MonitorGroup(name: it.grpname, serverItem: serverItem)
+            newGroups << new MonitorGroup(name: it.grpname, etalonId: it.grpid, serverItem: serverItem)
         }
 
         // Связываем с подгруппами
         monitorGroups.each {
-            def mg = (MonitorGroup) newGroups.find({g -> g.name == it.grpname})
+            def mg = (MonitorGroup) newGroups.find({g -> g.etalonId == it.grpid})
             newGroups.findAll({g -> it.groups.contains(g.name)}).each { MonitorGroup g ->
                 mg.addToGroups(g)
             }
@@ -57,5 +58,20 @@ class ImportDbService {
 
         // Сохраняем
         newGroups*.save()
+    }
+
+    /**
+     * Импорт элементов проверки
+     *
+     * @param serverItem Сервер проверки
+     * @param sql БД
+     */
+    def importMoitorItems(ServerItem serverItem, Sql sql) {
+        def monitorItems = readDbService.getMonitorItems(sql)
+        monitorItems.each {
+            MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+            MonitorItem mi = new MonitorItem(path: it.path, ipos: it.ipos, group: mg)
+            mi.save()
+        }
     }
 }
