@@ -58,6 +58,12 @@ class ReadDbService {
         return list
     }
 
+    /**
+     * Получение шаблонов проверки
+     *
+     * @param sql БД
+     * @return [grpid, ipos, pattern, flags]
+     */
     def getPatts(Sql sql) {
         def list = []
         sql.eachRow("SELECT grpid, ipos, pattern, flags FROM mvz_patt") {

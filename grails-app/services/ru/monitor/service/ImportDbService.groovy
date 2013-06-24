@@ -4,6 +4,7 @@ import groovy.sql.Sql
 import ru.monitor.db.SQLiteConnectionFactory
 import ru.monitor.model.MonitorGroup
 import ru.monitor.model.MonitorItem
+import ru.monitor.model.Patt
 import ru.monitor.model.ServerItem
 
 /**
@@ -19,9 +20,9 @@ class ImportDbService {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             importMonitorGroups(serverItem, sql)
-            importMoitorItems(serverItem, sql)
+            importMonitorItems(sql)
+            importPatts(sql)
 
-//            def patts = readDbService.getPatts(sql)
 //            def etalonDirs = readDbService.getEtalonDirs(sql)
 //            def etalonFiles = readDbService.getEtalonFiles(sql)
 //            def etalonAces = readDbService.getEtalonAces(sql)
@@ -66,12 +67,26 @@ class ImportDbService {
      * @param serverItem Сервер проверки
      * @param sql БД
      */
-    def importMoitorItems(ServerItem serverItem, Sql sql) {
+    def importMonitorItems(Sql sql) {
         def monitorItems = readDbService.getMonitorItems(sql)
         monitorItems.each {
             MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
             MonitorItem mi = new MonitorItem(path: it.path, ipos: it.ipos, group: mg)
             mi.save()
+        }
+    }
+
+    /**
+     * Импорт шаблонов проверки
+     * @param sql БД
+     */
+    def importPatts(Sql sql) {
+        def patts = readDbService.getPatts(sql)
+        patts.each {
+            MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+            MonitorItem mi = MonitorItem.findByGroupAndIpos(mg, it.ipos)
+            Patt p = new Patt(pattern: it.pattern, flags: it.flags, monitorItem: mi)
+            p.save()
         }
     }
 }
