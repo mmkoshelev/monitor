@@ -73,6 +73,12 @@ class ReadDbService {
         return list
     }
 
+    /**
+     * Получение эталонных директорий проверки
+     *
+     * @param sql БД
+     * @return [dirid, grpid, dname]
+     */
     def getEtalonDirs(Sql sql) {
         def list = []
         sql.eachRow("SELECT dirid, grpid, dname FROM mvz_dir") {

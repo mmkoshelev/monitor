@@ -1,7 +1,10 @@
 package ru.monitor.service
 
 import groovy.sql.Sql
+import org.hibernate.StatelessSession
+import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
+import ru.monitor.model.EtalonDir
 import ru.monitor.model.MonitorGroup
 import ru.monitor.model.MonitorItem
 import ru.monitor.model.Patt
@@ -14,7 +17,11 @@ import ru.monitor.model.ServerItem
  */
 class ImportDbService {
 
+    /** Сервис чтения данных SQLite */
     def readDbService
+    /** Фабрика открытия сессий работы с БД */
+    def sessionFactory
+
 
     def importDb(ServerItem serverItem, String filePath) {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
@@ -22,8 +29,8 @@ class ImportDbService {
             importMonitorGroups(serverItem, sql)
             importMonitorItems(sql)
             importPatts(sql)
+            importEtalonDirs(sql)
 
-//            def etalonDirs = readDbService.getEtalonDirs(sql)
 //            def etalonFiles = readDbService.getEtalonFiles(sql)
 //            def etalonAces = readDbService.getEtalonAces(sql)
 //            def checkRuns = readDbService.getCheckRuns(sql)
@@ -78,6 +85,7 @@ class ImportDbService {
 
     /**
      * Импорт шаблонов проверки
+     *
      * @param sql БД
      */
     def importPatts(Sql sql) {
@@ -87,6 +95,27 @@ class ImportDbService {
             MonitorItem mi = MonitorItem.findByGroupAndIpos(mg, it.ipos)
             Patt p = new Patt(pattern: it.pattern, flags: it.flags, monitorItem: mi)
             p.save()
+        }
+    }
+
+    /**
+     * Импорт эталонных директорий
+     *
+     * @param sql
+     */
+    def importEtalonDirs(Sql sql) {
+        def etalonDirs = readDbService.getEtalonDirs(sql)
+        StatelessSession session = sessionFactory.openStatelessSession()
+        try {
+            Transaction tx = session.beginTransaction()
+            etalonDirs.each {
+                MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+                EtalonDir ed = new EtalonDir(name: it.dname, etalonId: it.dirid, group: mg)
+                session.insert(ed)
+            }
+            tx.commit()
+        } finally {
+            session.close()
         }
     }
 }
