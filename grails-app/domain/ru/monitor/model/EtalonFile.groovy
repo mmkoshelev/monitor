@@ -8,6 +8,7 @@ package ru.monitor.model
 class EtalonFile {
 
     String name
+    Long etalonId
     String hash
     Integer size
 

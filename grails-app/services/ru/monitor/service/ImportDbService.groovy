@@ -5,6 +5,7 @@ import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
 import ru.monitor.model.EtalonDir
+import ru.monitor.model.EtalonFile
 import ru.monitor.model.MonitorGroup
 import ru.monitor.model.MonitorItem
 import ru.monitor.model.Patt
@@ -30,8 +31,8 @@ class ImportDbService {
             importMonitorItems(sql)
             importPatts(sql)
             importEtalonDirs(sql)
+            importEtalonFiles(sql)
 
-//            def etalonFiles = readDbService.getEtalonFiles(sql)
 //            def etalonAces = readDbService.getEtalonAces(sql)
 //            def checkRuns = readDbService.getCheckRuns(sql)
 //            def checkFiles = readDbService.getCheckFiles(sql)
@@ -108,10 +109,34 @@ class ImportDbService {
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
+            def groups = MonitorGroup.list()
             etalonDirs.each {
-                MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+                MonitorGroup mg = groups.find({g -> g.etalonId == it.grpid})
                 EtalonDir ed = new EtalonDir(name: it.dname, etalonId: it.dirid, group: mg)
                 session.insert(ed)
+            }
+            tx.commit()
+        } finally {
+            session.close()
+        }
+    }
+
+    /**
+     * Импорт эталонных файлов
+     *
+     * @param sql
+     */
+    def importEtalonFiles(Sql sql) {
+        def etalonFiles = readDbService.getEtalonFiles(sql)
+        StatelessSession session = sessionFactory.openStatelessSession()
+        try {
+            Transaction tx = session.beginTransaction()
+            def dirs = EtalonDir.list()
+            etalonFiles.each {
+                EtalonDir ed = dirs.find({d -> d.etalonId == it.dirid})
+                EtalonFile ef = new EtalonFile(name: it.fname, hash: it.fhash, size: it.fsize,
+                        etalonId: it.eid, etalonDir: ed)
+                session.insert(ef)
             }
             tx.commit()
         } finally {

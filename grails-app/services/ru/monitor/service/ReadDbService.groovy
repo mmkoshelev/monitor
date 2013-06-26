@@ -88,6 +88,12 @@ class ReadDbService {
         return list
     }
 
+    /**
+     * Поолучение эталонных файлов проверки
+     *
+     * @param sql БД
+     * @return [eid, dirid, fname, fhash, fsize]
+     */
     def getEtalonFiles(Sql sql) {
         def list = []
         sql.eachRow("SELECT eid, dirid, fname, fhash, fsize FROM mvz_entry") {
