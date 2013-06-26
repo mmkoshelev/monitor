@@ -4,6 +4,7 @@ import groovy.sql.Sql
 import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
+import ru.monitor.model.EtalonAce
 import ru.monitor.model.EtalonDir
 import ru.monitor.model.EtalonFile
 import ru.monitor.model.MonitorGroup
@@ -32,8 +33,8 @@ class ImportDbService {
             importPatts(sql)
             importEtalonDirs(sql)
             importEtalonFiles(sql)
+            importEtalonAces(sql)
 
-//            def etalonAces = readDbService.getEtalonAces(sql)
 //            def checkRuns = readDbService.getCheckRuns(sql)
 //            def checkFiles = readDbService.getCheckFiles(sql)
 //            def checkAces = readDbService.getCheckAces(sql)
@@ -102,7 +103,7 @@ class ImportDbService {
     /**
      * Импорт эталонных директорий
      *
-     * @param sql
+     * @param sql БД
      */
     def importEtalonDirs(Sql sql) {
         def etalonDirs = readDbService.getEtalonDirs(sql)
@@ -124,7 +125,7 @@ class ImportDbService {
     /**
      * Импорт эталонных файлов
      *
-     * @param sql
+     * @param sql БД
      */
     def importEtalonFiles(Sql sql) {
         def etalonFiles = readDbService.getEtalonFiles(sql)
@@ -137,6 +138,29 @@ class ImportDbService {
                 EtalonFile ef = new EtalonFile(name: it.fname, hash: it.fhash, size: it.fsize,
                         etalonId: it.eid, etalonDir: ed)
                 session.insert(ef)
+            }
+            tx.commit()
+        } finally {
+            session.close()
+        }
+    }
+
+    /**
+     * Импорт эталонных ACE
+     *
+     * @param sql БД
+     */
+    def importEtalonAces(Sql sql) {
+        def etalonAces = readDbService.getEtalonAces(sql)
+        StatelessSession session = sessionFactory.openStatelessSession()
+        try {
+            Transaction tx = session.beginTransaction()
+            def files = EtalonFile.list()
+            etalonAces.each {
+                EtalonFile ef = files.find({f -> f.etalonId == it.eid})
+                EtalonAce ea = new EtalonAce(value: it.acevalue, mode: it.acemode,
+                        trustee: it.uname ?: it.trustee, diff: it.diff, etalonFile: ef)
+                session.insert(ea)
             }
             tx.commit()
         } finally {

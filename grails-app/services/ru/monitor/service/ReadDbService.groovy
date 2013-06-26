@@ -103,6 +103,12 @@ class ReadDbService {
         return list
     }
 
+    /**
+     * Получение эталонных ACE
+     *
+     * @param sql БД
+     * @return [eid, acemode, diff, acevalue, uname, trustee]
+     */
     def getEtalonAces(Sql sql) {
         def list = []
         sql.eachRow("""SELECT a.eid, a.acemode, 0 as diff, a.acevalue, t.uname, NULL as trustee
