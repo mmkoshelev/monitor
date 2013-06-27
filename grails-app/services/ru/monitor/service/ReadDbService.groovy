@@ -126,15 +126,27 @@ class ReadDbService {
         return list
     }
 
+    /**
+     * Получение результатов проверки
+     *
+     * @param sql БД
+     * @return [ceid, dirid, runid, fname, status]
+     */
     def getCheckFiles(Sql sql) {
         def list = []
-        sql.eachRow("SELECT ceid, dirid, fname, status FROM mvz_chkent") {
+        sql.eachRow("SELECT ceid, dirid, runid, fname, status FROM mvz_chkent") {
             list << it.toRowResult()
         }
 
         return list
     }
 
+    /**
+     * Получение ACE проверки для файлов
+     *
+     * @param sql БД
+     * @return [ceid, acemode, cdiff, acevalue, uname, trustee]
+     */
     def getCheckAces(Sql sql) {
         def list = []
         sql.eachRow("""SELECT a.ceid, a.acemode, a.cdiff, a.acevalue, t.uname, ct.uname as trustee

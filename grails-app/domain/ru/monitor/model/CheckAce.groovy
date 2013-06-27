@@ -15,5 +15,6 @@ class CheckAce {
     static belongsTo = [checkFile: CheckFile]
 
     static constraints = {
+        trustee nullable: true
     }
 }

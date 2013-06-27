@@ -9,6 +9,7 @@ class CheckFile {
 
     String name
     Integer status
+    Long etalonId
 
     static belongsTo = [checkRun: CheckRun, etalonDir: EtalonDir]
     static hasMany = [checkAces: CheckAce]

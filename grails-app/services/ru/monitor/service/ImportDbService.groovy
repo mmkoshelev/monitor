@@ -5,6 +5,8 @@ import org.apache.commons.lang.time.DateUtils
 import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
+import ru.monitor.model.CheckAce
+import ru.monitor.model.CheckFile
 import ru.monitor.model.CheckRun
 import ru.monitor.model.EtalonAce
 import ru.monitor.model.EtalonDir
@@ -37,9 +39,8 @@ class ImportDbService {
             importEtalonFiles(sql)
             importEtalonAces(sql)
             importCheckRuns(serverItem, sql)
-
-//            def checkFiles = readDbService.getCheckFiles(sql)
-//            def checkAces = readDbService.getCheckAces(sql)
+            importCheckFiles(sql)
+            importCheckAces(sql)
         } finally {
             sql.close()
         }
@@ -182,6 +183,54 @@ class ImportDbService {
             def runDate = DateUtils.parseDate(it.runid, "yyyy-MM-dd_HH-mm-ss")
             CheckRun cr = new CheckRun(runDate: runDate, etalonId: it.runid, group: mg, serverItem: serverItem)
             cr.save()
+        }
+    }
+
+    /**
+     * Импорт проверочных файлов
+     *
+     * @param sql БД
+     */
+    def importCheckFiles(Sql sql) {
+        def checkFiles = readDbService.getCheckFiles(sql)
+        StatelessSession session = sessionFactory.openStatelessSession()
+        try {
+            Transaction tx = session.beginTransaction()
+            def dirs = EtalonDir.list()
+            def checkRuns = CheckRun.list()
+            checkFiles.each {
+                EtalonDir ed = dirs.find({d -> d.etalonId == it.dirid})
+                CheckRun cr = checkRuns.find({r -> r.etalonId == it.runid})
+                CheckFile cf = new CheckFile(name: it.fname, status: it.status,
+                        etalonId: it.ceid, etalonDir: ed, checkRun: cr)
+                session.insert(cf)
+            }
+            tx.commit()
+        } finally {
+            session.close()
+        }
+    }
+
+    /**
+     * Импорт проверочных ACE
+     *
+     * @param sql БД
+     */
+    def importCheckAces(Sql sql) {
+        def checkAces = readDbService.getCheckAces(sql)
+        StatelessSession session = sessionFactory.openStatelessSession()
+        try {
+            Transaction tx = session.beginTransaction()
+            def files = CheckFile.list()
+            checkAces.each {
+                CheckFile cf = files.find({f -> f.etalonId == it.ceid})
+                CheckAce ca = new CheckAce(value: it.acevalue, mode: it.acemode,
+                        trustee: it.uname ?: it.trustee, diff: it.cdiff, checkFile: cf)
+                session.insert(ca)
+            }
+            tx.commit()
+        } finally {
+            session.close()
         }
     }
 }
