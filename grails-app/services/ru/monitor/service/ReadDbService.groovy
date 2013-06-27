@@ -34,15 +34,6 @@ class ReadDbService {
         return list
     }
 
-    def getCheckRuns(Sql sql) {
-        def list = []
-        sql.eachRow("SELECT runid, grpid FROM mvz_chkrun") {
-            list << it.toRowResult()
-        }
-
-        return list
-    }
-
     /**
      * Получение элементов проверки
      *
@@ -114,6 +105,21 @@ class ReadDbService {
         sql.eachRow("""SELECT a.eid, a.acemode, 0 as diff, a.acevalue, t.uname, NULL as trustee
                        FROM mvz_eace a LEFT OUTER JOIN mvz_trustee t
                            ON a.trustee = t.uid""") {
+            list << it.toRowResult()
+        }
+
+        return list
+    }
+
+    /**
+     * Получение проверок
+     *
+     * @param sql БД
+     * @return [runid, grpid]
+     */
+    def getCheckRuns(Sql sql) {
+        def list = []
+        sql.eachRow("SELECT runid, grpid FROM mvz_chkrun") {
             list << it.toRowResult()
         }
 

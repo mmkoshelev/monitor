@@ -8,6 +8,7 @@ package ru.monitor.model
 class CheckRun {
 
     Date runDate
+    String etalonId
 
     static belongsTo = [group: MonitorGroup, serverItem: ServerItem]
     static hasMany = [checkFiles: CheckFile]

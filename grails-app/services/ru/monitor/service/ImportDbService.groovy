@@ -1,9 +1,11 @@
 package ru.monitor.service
 
 import groovy.sql.Sql
+import org.apache.commons.lang.time.DateUtils
 import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
+import ru.monitor.model.CheckRun
 import ru.monitor.model.EtalonAce
 import ru.monitor.model.EtalonDir
 import ru.monitor.model.EtalonFile
@@ -34,8 +36,8 @@ class ImportDbService {
             importEtalonDirs(sql)
             importEtalonFiles(sql)
             importEtalonAces(sql)
+            importCheckRuns(serverItem, sql)
 
-//            def checkRuns = readDbService.getCheckRuns(sql)
 //            def checkFiles = readDbService.getCheckFiles(sql)
 //            def checkAces = readDbService.getCheckAces(sql)
         } finally {
@@ -165,6 +167,21 @@ class ImportDbService {
             tx.commit()
         } finally {
             session.close()
+        }
+    }
+
+    /**
+     * Импорт проверок
+     *
+     * @param sql БД
+     */
+    def importCheckRuns(ServerItem serverItem, Sql sql) {
+        def checkRuns = readDbService.getCheckRuns(sql)
+        checkRuns.each {
+            MonitorGroup mg = MonitorGroup.findByEtalonIdAndServerItem(it.grpid, serverItem)
+            def runDate = DateUtils.parseDate(it.runid, "yyyy-MM-dd_HH-mm-ss")
+            CheckRun cr = new CheckRun(runDate: runDate, etalonId: it.runid, group: mg, serverItem: serverItem)
+            cr.save()
         }
     }
 }

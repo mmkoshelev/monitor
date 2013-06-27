@@ -15,5 +15,6 @@ class EtalonAce {
     static belongsTo = [etalonFile: EtalonFile]
 
     static constraints = {
+        trustee nullable: true
     }
 }
