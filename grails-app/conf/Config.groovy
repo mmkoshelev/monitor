@@ -89,5 +89,7 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 
-    debug  'ru.monitor'
+    info   'grails.app.controllers.ru.monitor',
+           'grails.app.services.ru.monitor',
+           'ru.monitor'
 }

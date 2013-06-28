@@ -32,14 +32,31 @@ class ImportDbService {
     def importDb(ServerItem serverItem, String filePath) {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
+            log.info("importMonitorGroups")
             importMonitorGroups(serverItem, sql)
+
+            log.info("importMonitorItems")
             importMonitorItems(sql)
+
+            log.info("importPatts")
             importPatts(sql)
+
+            log.info("importEtalonDirs")
             importEtalonDirs(sql)
+
+            log.info("importEtalonFiles")
             importEtalonFiles(sql)
+
+            log.info("importEtalonAces")
             importEtalonAces(sql)
+
+            log.info("importCheckRuns")
             importCheckRuns(serverItem, sql)
+
+            log.info("importCheckFiles")
             importCheckFiles(sql)
+
+            log.info("importCheckAces")
             importCheckAces(sql)
         } finally {
             sql.close()

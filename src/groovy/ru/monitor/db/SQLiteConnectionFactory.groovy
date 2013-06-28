@@ -1,7 +1,6 @@
 package ru.monitor.db
 
 import groovy.sql.Sql
-import org.sqlite.SQLiteDataSource
 
 import java.text.MessageFormat
 
