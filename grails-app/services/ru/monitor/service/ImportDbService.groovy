@@ -33,31 +33,32 @@ class ImportDbService {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             log.info("importMonitorGroups")
-            importMonitorGroups(serverItem, sql)
+            def monitorGroups = importMonitorGroups(serverItem, sql)
 
             log.info("importMonitorItems")
-            importMonitorItems(sql)
+            importMonitorItems(monitorGroups, sql)
 
             log.info("importPatts")
-            importPatts(sql)
+            importPatts(serverItem, sql)
 
             log.info("importEtalonDirs")
-            importEtalonDirs(sql)
+            def etalonDirs = importEtalonDirs(serverItem, sql)
 
             log.info("importEtalonFiles")
-            importEtalonFiles(sql)
+            def etalonFiles = importEtalonFiles(etalonDirs, sql)
 
             log.info("importEtalonAces")
-            importEtalonAces(sql)
+            importEtalonAces(etalonFiles, sql)
 
             log.info("importCheckRuns")
-            importCheckRuns(serverItem, sql)
+            def checkRuns = importCheckRuns(serverItem, sql)
 
             log.info("importCheckFiles")
-            importCheckFiles(sql)
+            def checkFiles = importCheckFiles(etalonDirs, checkRuns, sql)
 
             log.info("importCheckAces")
-            importCheckAces(sql)
+            importCheckAces(checkFiles, sql)
+            log.info("importComplete")
         } finally {
             sql.close()
         }
@@ -68,7 +69,7 @@ class ImportDbService {
      *
      * @param serverItem Сервер проверки
      * @param sql БД
-     * @return
+     * @return Импортированные группы проверок
      */
     def importMonitorGroups(ServerItem serverItem, Sql sql) {
         def monitorGroups = readDbService.getMonitorGroups(sql)
@@ -88,18 +89,20 @@ class ImportDbService {
 
         // Сохраняем
         newGroups*.save()
+
+        return newGroups
     }
 
     /**
      * Импорт элементов проверки
      *
-     * @param serverItem Сервер проверки
+     * @param monitorGroups Группы проверки сервера
      * @param sql БД
      */
-    def importMonitorItems(Sql sql) {
+    def importMonitorItems(List<MonitorGroup> monitorGroups, Sql sql) {
         def monitorItems = readDbService.getMonitorItems(sql)
         monitorItems.each {
-            MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+            MonitorGroup mg = monitorGroups.find({ g -> g.etalonId == it.grpid})
             MonitorItem mi = new MonitorItem(path: it.path, ipos: it.ipos, group: mg)
             mi.save()
         }
@@ -108,12 +111,13 @@ class ImportDbService {
     /**
      * Импорт шаблонов проверки
      *
+     * @param Сервер проверки
      * @param sql БД
      */
-    def importPatts(Sql sql) {
+    def importPatts(ServerItem serverItem, Sql sql) {
         def patts = readDbService.getPatts(sql)
         patts.each {
-            MonitorGroup mg = MonitorGroup.findByEtalonId(it.grpid)
+            MonitorGroup mg = MonitorGroup.findByEtalonIdAndServerItem(it.grpid, serverItem)
             MonitorItem mi = MonitorItem.findByGroupAndIpos(mg, it.ipos)
             Patt p = new Patt(pattern: it.pattern, flags: it.flags, monitorItem: mi)
             p.save()
@@ -123,61 +127,72 @@ class ImportDbService {
     /**
      * Импорт эталонных директорий
      *
+     * @param serverItem Сервер проверки
      * @param sql БД
+     * @return Импортированные эталонные директории
      */
-    def importEtalonDirs(Sql sql) {
+    def importEtalonDirs(ServerItem serverItem, Sql sql) {
         def etalonDirs = readDbService.getEtalonDirs(sql)
+        def newDirs = []
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
-            def groups = MonitorGroup.list()
+            def groups = MonitorGroup.findAllByServerItem(serverItem)
             etalonDirs.each {
                 MonitorGroup mg = groups.find({g -> g.etalonId == it.grpid})
                 EtalonDir ed = new EtalonDir(name: it.dname, etalonId: it.dirid, group: mg)
                 session.insert(ed)
+                newDirs << ed
             }
             tx.commit()
         } finally {
             session.close()
         }
+
+        return newDirs
     }
 
     /**
      * Импорт эталонных файлов
      *
+     * @param etalonDirs Эталонные директории
      * @param sql БД
+     * @return Импортированные эталонные файлы
      */
-    def importEtalonFiles(Sql sql) {
+    def importEtalonFiles(List<EtalonDir> etalonDirs, Sql sql) {
         def etalonFiles = readDbService.getEtalonFiles(sql)
+        def newFiles = []
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
-            def dirs = EtalonDir.list()
             etalonFiles.each {
-                EtalonDir ed = dirs.find({d -> d.etalonId == it.dirid})
+                EtalonDir ed = etalonDirs.find({d -> d.etalonId == it.dirid})
                 EtalonFile ef = new EtalonFile(name: it.fname, hash: it.fhash, size: it.fsize,
                         etalonId: it.eid, etalonDir: ed)
                 session.insert(ef)
+                newFiles << ef
             }
             tx.commit()
         } finally {
             session.close()
         }
+
+        return newFiles
     }
 
     /**
      * Импорт эталонных ACE
      *
+     * @param etalonFiles Эталонные файлы
      * @param sql БД
      */
-    def importEtalonAces(Sql sql) {
+    def importEtalonAces(List<EtalonFile> etalonFiles, Sql sql) {
         def etalonAces = readDbService.getEtalonAces(sql)
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
-            def files = EtalonFile.list()
             etalonAces.each {
-                EtalonFile ef = files.find({f -> f.etalonId == it.eid})
+                EtalonFile ef = etalonFiles.find({f -> f.etalonId == it.eid})
                 EtalonAce ea = new EtalonAce(value: it.acevalue, mode: it.acemode,
                         trustee: it.uname ?: it.trustee, diff: it.diff, etalonFile: ef)
                 session.insert(ea)
@@ -191,56 +206,67 @@ class ImportDbService {
     /**
      * Импорт проверок
      *
+     * @param serverItem Сервер проверки
      * @param sql БД
+     * @return Импортированные проверки
      */
     def importCheckRuns(ServerItem serverItem, Sql sql) {
         def checkRuns = readDbService.getCheckRuns(sql)
+        def newRuns = []
         checkRuns.each {
             MonitorGroup mg = MonitorGroup.findByEtalonIdAndServerItem(it.grpid, serverItem)
             def runDate = DateUtils.parseDate(it.runid, "yyyy-MM-dd_HH-mm-ss")
             CheckRun cr = new CheckRun(runDate: runDate, etalonId: it.runid, group: mg, serverItem: serverItem)
             cr.save()
+            newRuns << cr
         }
+
+        return newRuns
     }
 
     /**
      * Импорт проверочных файлов
      *
+     * @param etalonDirs Эталонные директории
+     * @param checkRuns Проверки
      * @param sql БД
+     * @return Импортированные файлы проверки
      */
-    def importCheckFiles(Sql sql) {
+    def importCheckFiles(List<EtalonDir> etalonDirs, List<CheckRun> checkRuns, Sql sql) {
         def checkFiles = readDbService.getCheckFiles(sql)
+        def newFiles = []
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
-            def dirs = EtalonDir.list()
-            def checkRuns = CheckRun.list()
             checkFiles.each {
-                EtalonDir ed = dirs.find({d -> d.etalonId == it.dirid})
+                EtalonDir ed = etalonDirs.find({d -> d.etalonId == it.dirid})
                 CheckRun cr = checkRuns.find({r -> r.etalonId == it.runid})
                 CheckFile cf = new CheckFile(name: it.fname, status: it.status,
                         etalonId: it.ceid, etalonDir: ed, checkRun: cr)
                 session.insert(cf)
+                newFiles << cf
             }
             tx.commit()
         } finally {
             session.close()
         }
+
+        return newFiles
     }
 
     /**
      * Импорт проверочных ACE
      *
+     * @param checkFiles Файлы проверки
      * @param sql БД
      */
-    def importCheckAces(Sql sql) {
+    def importCheckAces(List<CheckFile> checkFiles, Sql sql) {
         def checkAces = readDbService.getCheckAces(sql)
         StatelessSession session = sessionFactory.openStatelessSession()
         try {
             Transaction tx = session.beginTransaction()
-            def files = CheckFile.list()
             checkAces.each {
-                CheckFile cf = files.find({f -> f.etalonId == it.ceid})
+                CheckFile cf = checkFiles.find({f -> f.etalonId == it.ceid})
                 CheckAce ca = new CheckAce(value: it.acevalue, mode: it.acemode,
                         trustee: it.uname ?: it.trustee, diff: it.cdiff, checkFile: cf)
                 session.insert(ca)
