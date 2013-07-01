@@ -5,6 +5,7 @@ import org.apache.commons.lang.time.DateUtils
 import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
+import ru.monitor.exception.MonitorException
 import ru.monitor.model.CheckAce
 import ru.monitor.model.CheckFile
 import ru.monitor.model.CheckRun
@@ -59,6 +60,8 @@ class ImportDbService {
             log.info("importCheckAces")
             importCheckAces(checkFiles, sql)
             log.info("importComplete")
+        } catch(Exception e) {
+            throw new MonitorException("Ошикбка импорта файла данных для сервера [$serverItem.name]", e)
         } finally {
             sql.close()
         }
@@ -88,7 +91,7 @@ class ImportDbService {
         }
 
         // Сохраняем
-        newGroups*.save()
+        newGroups*.save(failOnError: true)
 
         return newGroups
     }
@@ -104,7 +107,7 @@ class ImportDbService {
         monitorItems.each {
             MonitorGroup mg = monitorGroups.find({ g -> g.etalonId == it.grpid})
             MonitorItem mi = new MonitorItem(path: it.path, ipos: it.ipos, group: mg)
-            mi.save()
+            mi.save(failOnError: true)
         }
     }
 
@@ -120,7 +123,7 @@ class ImportDbService {
             MonitorGroup mg = MonitorGroup.findByEtalonIdAndServerItem(it.grpid, serverItem)
             MonitorItem mi = MonitorItem.findByGroupAndIpos(mg, it.ipos)
             Patt p = new Patt(pattern: it.pattern, flags: it.flags, monitorItem: mi)
-            p.save()
+            p.save(failOnError: true)
         }
     }
 
@@ -217,7 +220,7 @@ class ImportDbService {
             MonitorGroup mg = MonitorGroup.findByEtalonIdAndServerItem(it.grpid, serverItem)
             def runDate = DateUtils.parseDate(it.runid, "yyyy-MM-dd_HH-mm-ss")
             CheckRun cr = new CheckRun(runDate: runDate, etalonId: it.runid, group: mg, serverItem: serverItem)
-            cr.save()
+            cr.save(failOnError: true)
             newRuns << cr
         }
 
