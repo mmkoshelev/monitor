@@ -1,6 +1,7 @@
 package ru.monitor.controller
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
+import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
 
 import java.text.MessageFormat
@@ -57,6 +58,8 @@ class ServersController {
                 }
             } catch (IOException ex) {
                 log.error("Ошибка работы с файлами", ex)
+            } catch (MonitorException ex) {
+                log.error("Ошибка импорта", ex)
             } finally{
                 tmp.delete()
             }

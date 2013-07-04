@@ -29,8 +29,14 @@ class ImportDbService {
     /** Фабрика открытия сессий работы с БД */
     def sessionFactory
 
-
-    def importDb(ServerItem serverItem, String filePath) {
+    /**
+     * Импорт данных файла для серера
+     *
+     * @param serverItem Сервер проверки
+     * @param filePath Путь к файлу данных проверки
+     * @throws MonitorException
+     */
+    def importDb(ServerItem serverItem, String filePath) throws MonitorException {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
             log.info("importMonitorGroups")
@@ -61,7 +67,7 @@ class ImportDbService {
             importCheckAces(checkFiles, sql)
             log.info("importComplete")
         } catch(Exception e) {
-            throw new MonitorException("Ошикбка импорта файла данных для сервера [$serverItem.name]", e)
+            throw new MonitorException("Ошибка импорта файла данных для сервера [$serverItem.name]", e)
         } finally {
             sql.close()
         }
