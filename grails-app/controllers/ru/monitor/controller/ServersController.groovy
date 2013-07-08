@@ -3,6 +3,7 @@ package ru.monitor.controller
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
+import ru.monitor.util.LogUtil
 
 import java.text.MessageFormat
 
@@ -22,7 +23,7 @@ class ServersController {
             def servers = ServerItem.list(sort: "name")
             return [servers: servers]
         } catch (Exception ex) {
-            flash.ex = ex
+            //flash.ex = ex
             request.setAttribute("error", "Жопень")
         }
     }
@@ -31,15 +32,14 @@ class ServersController {
         def server = new ServerItem(params)
         try {
             if (!server.save(flush: true)) {
-                server.errors.getAllErrors().each {err ->
-                    flash.error = MessageFormat.format(err.defaultMessage, err.arguments)
-                }
+                LogUtil.error(flash, server.errors)
             } else {
                 flash.success = "Сервер проверки успешно добавлен"
             }
         } catch (Exception ex) {
             flash.error = ex.message
         }
+
 
         return redirect(action: "index")
     }
