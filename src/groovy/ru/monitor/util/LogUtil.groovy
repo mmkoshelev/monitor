@@ -67,6 +67,78 @@ class LogUtil {
     }
 
     /**
+     * Вывод информации об успехе операции
+     *
+     * @param flash Flash scope
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static success(FlashScope flash, String msg, Log log = null) {
+        log?.info(msg)
+        flash.success = msg
+    }
+
+    /**
+     * Вывод информации об успехе операции
+     *
+     * @param request Запрос
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static success(HttpServletRequest request, String msg, Log log = null) {
+        log?.info(msg)
+        request.setAttribute("success", msg)
+    }
+
+    /**
+     * Вывод варнинга
+     *
+     * @param flash Flash scope
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static warn(FlashScope flash, String msg, Log log = null) {
+        log?.warn(msg)
+        flash.warn = msg
+    }
+
+    /**
+     * Вывод варнинг
+     *
+     * @param request Запрос
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static warn(HttpServletRequest request, String msg, Log log = null) {
+        log?.warn(msg)
+        request.setAttribute("warn", msg)
+    }
+
+    /**
+     * Вывод общего сообщения
+     *
+     * @param flash Flash scope
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static message(FlashScope flash, String msg, Log log = null) {
+        log?.info(msg)
+        flash.message = msg
+    }
+
+    /**
+     * Вывод общего сообщения
+     *
+     * @param request Запрос
+     * @param msg Сообщение
+     * @param log Логгер
+     */
+    static message(HttpServletRequest request, String msg, Log log = null) {
+        log?.info(msg)
+        request.setAttribute("message", msg)
+    }
+
+    /**
      * Сбор ошибок валидации в строковое представление
      *
      * @param errors Ошибки валидации

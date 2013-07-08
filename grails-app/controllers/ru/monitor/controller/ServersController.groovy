@@ -5,10 +5,8 @@ import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
 import ru.monitor.util.LogUtil
 
-import java.text.MessageFormat
-
 /**
- * Отображение информации по серверам прверки
+ * Отображение информации по серверам проверки
  *
  * @since 0.1
  */
@@ -23,8 +21,7 @@ class ServersController {
             def servers = ServerItem.list(sort: "name")
             return [servers: servers]
         } catch (Exception ex) {
-            //flash.ex = ex
-            request.setAttribute("error", "Жопень")
+            LogUtil.error(request, "Ошибка отображения серверов проверки", ex, log)
         }
     }
 
