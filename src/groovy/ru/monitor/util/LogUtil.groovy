@@ -24,7 +24,7 @@ class LogUtil {
      */
     static error(FlashScope flash, String msg, Exception ex = null, Log log = null) {
         log?.error(msg, ex)
-        flash.error = messageExceptionToString(msg, ex)
+        addMessage(flash, "error", messageExceptionToString(msg, ex))
     }
 
     /**
@@ -50,7 +50,7 @@ class LogUtil {
      */
     static error(HttpServletRequest request, String msg, Exception ex = null, Log log = null) {
         log?.error(msg, ex)
-        request.setAttribute("error", messageExceptionToString(msg, ex))
+        addMessage(request, "error", messageExceptionToString(msg, ex))
     }
 
     /**
@@ -75,7 +75,7 @@ class LogUtil {
      */
     static success(FlashScope flash, String msg, Log log = null) {
         log?.info(msg)
-        flash.success = msg
+        addMessage(flash, "success", msg)
     }
 
     /**
@@ -87,7 +87,7 @@ class LogUtil {
      */
     static success(HttpServletRequest request, String msg, Log log = null) {
         log?.info(msg)
-        request.setAttribute("success", msg)
+        addMessage(request, "success", msg)
     }
 
     /**
@@ -99,11 +99,11 @@ class LogUtil {
      */
     static warn(FlashScope flash, String msg, Log log = null) {
         log?.warn(msg)
-        flash.warn = msg
+        addMessage(flash, "warn", msg)
     }
 
     /**
-     * Вывод варнинг
+     * Вывод варнинга
      *
      * @param request Запрос
      * @param msg Сообщение
@@ -111,7 +111,7 @@ class LogUtil {
      */
     static warn(HttpServletRequest request, String msg, Log log = null) {
         log?.warn(msg)
-        request.setAttribute("warn", msg)
+        addMessage(request, "warn", msg)
     }
 
     /**
@@ -123,7 +123,7 @@ class LogUtil {
      */
     static message(FlashScope flash, String msg, Log log = null) {
         log?.info(msg)
-        flash.message = msg
+        addMessage(flash, "message", msg)
     }
 
     /**
@@ -135,7 +135,7 @@ class LogUtil {
      */
     static message(HttpServletRequest request, String msg, Log log = null) {
         log?.info(msg)
-        request.setAttribute("message", msg)
+        addMessage(request, "message", msg)
     }
 
     /**
@@ -162,5 +162,43 @@ class LogUtil {
      */
     private static String messageExceptionToString(String msg, Exception ex) {
         return msg + (ex != null ? ": ${ex.message}" : "")
+    }
+
+    /**
+     * Добавление сообщения в заданный контекст
+     * с учетом новое сообщение или расширить до списка
+     *
+     * @param flash Flash scope
+     * @param name Название параметра (error, success, warn, message)
+     * @param msg Сообщение
+     */
+    private static addMessage(FlashScope flash, String name, String msg) {
+        if (!flash[name]) {
+            flash[name] = msg
+        } else {
+            if (flash[name] instanceof String) {
+                flash[name] = [flash[name]]
+            }
+            flash[name] << msg
+        }
+    }
+
+    /**
+     * Добавление сообщения в заданный контекст
+     * с учетом новое сообщение или расширить до списка
+     *
+     * @param request Запрос
+     * @param name Название параметра (error, success, warn, message)
+     * @param msg Сообщение
+     */
+    private static addMessage(HttpServletRequest request, String name, String msg) {
+        if (!request.getAttribute(name)) {
+            request.setAttribute(name, msg)
+        } else {
+            if (request.getAttribute(name) instanceof String) {
+                request.setAttribute(name, [request.getAttribute(name)])
+            }
+            request.getAttribute(name) << msg
+        }
     }
 }
