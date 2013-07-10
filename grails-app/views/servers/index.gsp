@@ -41,7 +41,7 @@
                             <tr>
                                 <td>${server.name}</td>
                                 <td>${server.code}</td>
-                                <td>нема пока даты</td>
+                                <td>${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}</td>
                             </tr>
                         </g:each>
                     </tbody>

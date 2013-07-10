@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${resource(dir: 'aui/css', file: 'aui-all.css')}" media="all">
     <!--[if lt IE 9]><link rel="stylesheet" href="${resource(dir: 'aui/css', file: 'aui-ie.css')}" media="all"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="${resource(dir: 'aui/css', file: 'aui-ie9.css')}" media="all"><![endif]-->
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'monitor.css')}" type="text/css">
 
     <script src="${resource(dir: 'aui/js', file: 'aui-all.js')}"></script>
 

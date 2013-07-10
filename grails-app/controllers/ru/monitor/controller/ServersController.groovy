@@ -18,8 +18,14 @@ class ServersController {
 
     def index() {
         try {
-            def servers = ServerItem.list(sort: "name")
-            return [servers: servers]
+            def servers = ServerItem.list(params)
+
+            def lastChecks = [:]
+            for (server in servers) {
+                lastChecks[server.code] = server.checkRuns.sort({a, b -> b.runDate <=> a.runDate }).find()?.runDate
+            }
+
+            return [servers: servers, lastChecks: lastChecks]
         } catch (Exception ex) {
             LogUtil.error(request, "Ошибка отображения серверов проверки", ex, log)
         }
