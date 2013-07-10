@@ -57,6 +57,8 @@ class ServersController {
                 def serverItem = ServerItem.findByCode(params.server)
                 if (serverItem) {
                     importDbService.importDb(serverItem, tmp.absolutePath)
+                } else {
+                    LogUtil.warn(flash, "Сервер проверки ${params.server} не найден", log)
                 }
             } catch (IOException ex) {
                 LogUtil.error(flash, "Ошибка работы с файлами", ex, log)
