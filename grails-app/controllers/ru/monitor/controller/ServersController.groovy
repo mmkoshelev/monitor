@@ -32,17 +32,16 @@ class ServersController {
     }
 
     def newserver() {
-        def server = new ServerItem(params)
         try {
+            def server = new ServerItem(params)
             if (!server.save(flush: true)) {
                 LogUtil.error(flash, server.errors)
             } else {
-                flash.success = "Сервер проверки успешно добавлен"
+                LogUtil.success(flash, "Сервер проверки успешно добавлен")
             }
         } catch (Exception ex) {
-            flash.error = ex.message
+            LogUtil.error(flash, "Ошибка добавления нового сервера проверки", ex, log)
         }
-
 
         return redirect(action: "index")
     }
@@ -50,7 +49,7 @@ class ServersController {
     def importdb() {
         def dbfile = ((MultipartHttpServletRequest)request).getFile("dbfile")
         if (dbfile.empty) {
-            flash.error = "Не указан файл базы"
+            LogUtil.error(flash, "Не указан файл базы")
         } else {
             File tmp = new File(UUID.randomUUID().toString() + ".db")
             try {
@@ -60,10 +59,10 @@ class ServersController {
                     importDbService.importDb(serverItem, tmp.absolutePath)
                 }
             } catch (IOException ex) {
-                log.error("Ошибка работы с файлами", ex)
+                LogUtil.error(flash, "Ошибка работы с файлами", ex, log)
             } catch (MonitorException ex) {
-                log.error("Ошибка импорта", ex)
-            } finally{
+                LogUtil.error(flash, "Ошибка импорта", ex, log)
+            } finally {
                 tmp.delete()
             }
         }
