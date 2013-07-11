@@ -35,7 +35,7 @@ class ServersController {
         try {
             def server = new ServerItem(params)
             if (!server.save(flush: true)) {
-                LogUtil.error(flash, server.errors)
+                LogUtil.error(flash, server.errors, log)
             } else {
                 LogUtil.success(flash, "Сервер проверки успешно добавлен")
             }

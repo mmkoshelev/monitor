@@ -6,16 +6,7 @@ import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import ru.monitor.db.SQLiteConnectionFactory
 import ru.monitor.exception.MonitorException
-import ru.monitor.model.CheckAce
-import ru.monitor.model.CheckFile
-import ru.monitor.model.CheckRun
-import ru.monitor.model.EtalonAce
-import ru.monitor.model.EtalonDir
-import ru.monitor.model.EtalonFile
-import ru.monitor.model.MonitorGroup
-import ru.monitor.model.MonitorItem
-import ru.monitor.model.Patt
-import ru.monitor.model.ServerItem
+import ru.monitor.model.*
 
 /**
  * Сервис импорта данных файла проверки
@@ -39,33 +30,42 @@ class ImportDbService {
     def importDb(ServerItem serverItem, String filePath) throws MonitorException {
         Sql sql = SQLiteConnectionFactory.getConnection(filePath)
         try {
-            log.info("importMonitorGroups")
+            log.info("Импортируем MonitorGroups для [${serverItem.code}]")
             def monitorGroups = importMonitorGroups(serverItem, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importMonitorItems")
+            log.info("Импортируем MonitorItems для [${serverItem.code}]")
             importMonitorItems(monitorGroups, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importPatts")
+            log.info("Импортируем Patts для [${serverItem.code}]")
             importPatts(serverItem, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importEtalonDirs")
+            log.info("Импортируем EtalonDirs для [${serverItem.code}]")
             def etalonDirs = importEtalonDirs(serverItem, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importEtalonFiles")
+            log.info("Импортируем EtalonFiles для [${serverItem.code}]")
             def etalonFiles = importEtalonFiles(etalonDirs, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importEtalonAces")
+            log.info("Импортируем EtalonAces для [${serverItem.code}]")
             importEtalonAces(etalonFiles, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importCheckRuns")
+            log.info("Импортируем CheckRuns для [${serverItem.code}]")
             def checkRuns = importCheckRuns(serverItem, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importCheckFiles")
+            log.info("Импортируем CheckFiles для [${serverItem.code}]")
             def checkFiles = importCheckFiles(etalonDirs, checkRuns, sql)
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
 
-            log.info("importCheckAces")
+            log.info("Импортируем CheckAces для [${serverItem.code}]")
             importCheckAces(checkFiles, sql)
-            log.info("importComplete")
+            log.info("MonitorGroups импортированы для [${serverItem.code}]")
+            log.info("Импорт завершен для [${serverItem.code}]")
         } catch(Exception e) {
             throw new MonitorException("Ошибка импорта файла данных для сервера [$serverItem.name]", e)
         } finally {
