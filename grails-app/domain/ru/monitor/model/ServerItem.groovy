@@ -15,4 +15,8 @@ class ServerItem {
     static constraints = {
         code unique: true, blank: false
     }
+
+    static mapping = {
+        checkRuns lazy: false
+    }
 }

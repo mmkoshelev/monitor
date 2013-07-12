@@ -1,5 +1,6 @@
 package ru.monitor.controller
 
+import org.apache.commons.lang.StringUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
@@ -18,7 +19,12 @@ class ServersController {
 
     def index() {
         try {
-            def servers = ServerItem.list(params)
+            List<ServerItem> servers = null;
+            if (flash.quicksearch == null) {
+                servers = ServerItem.list(params)
+            } else {
+                servers = flash.quicksearch
+            }
 
             def lastChecks = [:]
             for (server in servers) {
@@ -29,6 +35,12 @@ class ServersController {
         } catch (Exception ex) {
             LogUtil.error(request, "Ошибка отображения серверов проверки", ex, log)
         }
+    }
+
+    def quicksearch(String quicksearch) {
+        def qs = ServerItem.findAllByCodeLikeOrNameLike("%${quicksearch}%", "%${quicksearch}%")
+        flash.quicksearch = qs
+        return redirect(action: "index")
     }
 
     def newserver() {

@@ -20,7 +20,7 @@
         <div class="aui-header aui-dropdown2-trigger-group">
             <div class="aui-header-primary">
                 <h1 id="logo" class="aui-header-logo aui-header-logo-textonly">
-                    <g:link uri="/aui">
+                    <g:link uri="/">
                         <span class="aui-header-logo-device">monitor</span>
                     </g:link>
                 </h1>
@@ -43,6 +43,12 @@
             </div>
             <div class="aui-header-secondary">
                 <ul class="aui-nav">
+                    <li>
+                        <g:form action="quicksearch" method="post" class="aui-quicksearch">
+                            <label for="quicksearch" class="assistive">Поиск</label>
+                            <g:textField name="quicksearch" id="quicksearch" placeholder="Поиск" class="search" />
+                        </g:form>
+                    </li>
                     <li>
                         <a href="#menu2" aria-owns="menu2" aria-haspopup="true" class="aui-dropdown2-trigger">
                             <span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span>
