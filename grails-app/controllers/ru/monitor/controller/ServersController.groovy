@@ -1,6 +1,5 @@
 package ru.monitor.controller
 
-import org.apache.commons.lang.StringUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
@@ -19,7 +18,7 @@ class ServersController {
 
     def index() {
         try {
-            List<ServerItem> servers = null;
+            List<ServerItem> servers;
             if (flash.quicksearch == null) {
                 servers = ServerItem.list(params)
             } else {
