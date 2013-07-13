@@ -49,7 +49,7 @@ class ServersController {
             if (!server.save(flush: true)) {
                 LogUtil.error(flash, server.errors, log)
             } else {
-                LogUtil.success(flash, "Сервер проверки успешно добавлен")
+                LogUtil.success(flash, "Сервер проверки [$server.code] успешно добавлен",log)
             }
         } catch (Exception ex) {
             LogUtil.error(flash, "Ошибка добавления нового сервера проверки", ex, log)
@@ -62,14 +62,13 @@ class ServersController {
         def serverItem = ServerItem.get(id)
         if (!serverItem) {
             LogUtil.error(flash, "Не найден сервер проверки с идентификатором [${id}]", null, log)
-            return redirect(action: "index")
-        }
-
-        try {
-            serverItem.delete(flush: true)
-            LogUtil.success(flash, "Сервер проверки [${serverItem.code}] успешно удален")
-        } catch (DataIntegrityViolationException ex) {
-            LogUtil.error(flash, "Не удалось удалить сервер проверки [${serverItem.code}] с идентификатором [${id}]", ex, log)
+        } else {
+            try {
+                serverItem.delete(flush: true)
+                LogUtil.success(flash, "Сервер проверки [${serverItem.code}] успешно удален", log)
+            } catch (DataIntegrityViolationException ex) {
+                LogUtil.error(flash, "Не удалось удалить сервер проверки [${serverItem.code}] с идентификатором [${id}]", ex, log)
+            }
         }
 
         return redirect(action: "index")
@@ -78,7 +77,7 @@ class ServersController {
     def importdb() {
         def dbfile = ((MultipartHttpServletRequest)request).getFile("dbfile")
         if (dbfile.empty) {
-            LogUtil.error(flash, "Не указан файл базы")
+            LogUtil.error(flash, "Не указан файл базы для импорта")
         } else {
             File tmp = new File(UUID.randomUUID().toString() + ".db")
             try {
