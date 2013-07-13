@@ -1,5 +1,6 @@
 package ru.monitor.controller
 
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import ru.monitor.exception.MonitorException
 import ru.monitor.model.ServerItem
@@ -12,7 +13,7 @@ import ru.monitor.util.LogUtil
  */
 class ServersController {
 
-    static allowedMethods = [newserver: "POST", importdb: "POST"]
+    static allowedMethods = [newserver: "POST", delete: "POST", importdb: "POST", quicksearch: "POST"]
 
     def importDbService
 
@@ -52,6 +53,23 @@ class ServersController {
             }
         } catch (Exception ex) {
             LogUtil.error(flash, "Ошибка добавления нового сервера проверки", ex, log)
+        }
+
+        return redirect(action: "index")
+    }
+
+    def delete(Long id) {
+        def serverItem = ServerItem.get(id)
+        if (!serverItem) {
+            LogUtil.error(flash, "Не найден сервер проверки с идентификатором [${id}]", null, log)
+            return redirect(action: "index")
+        }
+
+        try {
+            serverItem.delete(flush: true)
+            LogUtil.success(flash, "Сервер проверки [${serverItem.code}] успешно удален")
+        } catch (DataIntegrityViolationException ex) {
+            LogUtil.error(flash, "Не удалось удалить сервер проверки [${serverItem.code}] с идентификатором [${id}]", ex, log)
         }
 
         return redirect(action: "index")

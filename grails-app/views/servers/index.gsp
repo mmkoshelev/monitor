@@ -34,6 +34,7 @@
                         <g:sortableColumn property="name" title="Наименование" />
                         <g:sortableColumn property="code" title="Код компонента" />
                         <th>Дата последней проверки</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,15 @@
                                 <td>${server.name}</td>
                                 <td>${server.code}</td>
                                 <td>${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}</td>
+                                <td class="right">
+                                    <g:form action="delete" method="post">
+                                        <g:hiddenField name="id" value="${server.id}" />
+                                        <button type="submit" class="aui-button" title="Удалить"
+                                                onclick="return confirm('Удалить сервер и все данные?');">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-remove">remove</span>
+                                        </button>
+                                    </g:form>
+                                </td>
                             </tr>
                         </g:each>
                     </tbody>

@@ -3,6 +3,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=EDGE" http-equiv="X-UA-Compatible">
+
     <title><g:layoutTitle default="Monitor"/></title>
 
     <link rel="stylesheet" href="${resource(dir: 'aui/css', file: 'aui-all.css')}" media="all">
@@ -11,6 +13,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'monitor.css')}" type="text/css">
 
     <script src="${resource(dir: 'aui/js', file: 'aui-all.js')}"></script>
+    <!--[if lt IE 9]><script src="${resource(dir: 'aui/js', file: 'aui-ie.js')}"></script><![endif]-->
 
     <g:layoutHead/>
     <r:layoutResources/>
