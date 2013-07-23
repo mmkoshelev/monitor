@@ -46,12 +46,15 @@
             </div>
             <div class="aui-header-secondary">
                 <ul class="aui-nav">
-                    <li>
-                        <g:form action="quicksearch" method="post" class="aui-quicksearch">
-                            <label for="quicksearch" class="assistive">Поиск</label>
-                            <g:textField name="quicksearch" id="quicksearch" placeholder="Поиск" class="search" />
-                        </g:form>
-                    </li>
+                    <g:if test="${hasquicksearch}">
+                        <li>
+                            <g:form action="quicksearch" method="post" class="aui-quicksearch">
+                                <label for="quicksearch" class="assistive">Поиск</label>
+                                <g:textField name="quicksearch" id="quicksearch" placeholder="Поиск"
+                                             class="search" value="${flash.quicksearchtext}" />
+                            </g:form>
+                        </li>
+                    </g:if>
                     <li>
                         <a href="#menu2" aria-owns="menu2" aria-haspopup="true" class="aui-dropdown2-trigger">
                             <span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span>

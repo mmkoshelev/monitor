@@ -3,6 +3,7 @@
 <head>
     <title>Сервера проверки</title>
     <meta name="layout" content="auimain">
+    <g:set var="hasquicksearch" value="${true}" scope="request" />
     <script src="${resource(dir: 'js/servers', file: 'index.js')}"></script>
 </head>
 <body>

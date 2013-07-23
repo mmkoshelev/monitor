@@ -40,6 +40,7 @@ class ServersController {
     def quicksearch(String quicksearch) {
         def qs = ServerItem.findAllByCodeLikeOrNameLike("%${quicksearch}%", "%${quicksearch}%")
         flash.quicksearch = qs
+        flash.quicksearchtext = quicksearch
         return redirect(action: "index")
     }
 
