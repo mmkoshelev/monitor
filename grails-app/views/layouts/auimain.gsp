@@ -18,8 +18,9 @@
     <g:layoutHead/>
     <r:layoutResources/>
 </head>
-<body>
+<body class="aui-layout aui-theme-default">
     <div id="header">
+        <m:messages/>
         <div class="aui-header aui-dropdown2-trigger-group">
             <div class="aui-header-primary">
                 <h1 id="logo" class="aui-header-logo aui-header-logo-textonly">
@@ -80,7 +81,6 @@
     </div>
 
     <div id="content">
-        <m:messages/>
         <g:layoutBody/>
     </div>
 
