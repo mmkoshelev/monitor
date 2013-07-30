@@ -21,6 +21,9 @@ class ServersController {
         try {
             List<ServerItem> servers;
             if (flash.quicksearch == null) {
+                if (!params.sort) {
+                    params.sort = "name"
+                }
                 servers = ServerItem.list(params)
             } else {
                 servers = flash.quicksearch
@@ -86,6 +89,7 @@ class ServersController {
                 def serverItem = ServerItem.findByCode(params.server)
                 if (serverItem) {
                     importDbService.importDb(serverItem, tmp.absolutePath)
+                    LogUtil.success(flash, "Импорт для сервера [${serverItem.code}] успешно выполнен")
                 } else {
                     LogUtil.warn(flash, "Сервер проверки ${params.server} не найден", log)
                 }
