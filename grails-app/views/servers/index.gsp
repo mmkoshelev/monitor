@@ -47,7 +47,7 @@
                                 <td class="right">
                                     <g:form action="delete" method="post">
                                         <g:hiddenField name="id" value="${server.id}" />
-                                        <button type="submit" class="aui-button" title="Удалить"
+                                        <button type="submit" class="aui-button aui-button-link" title="Удалить"
                                                 onclick="return confirm('Удалить сервер и все данные?');">
                                             <span class="aui-icon aui-icon-small aui-iconfont-remove">remove</span>
                                         </button>

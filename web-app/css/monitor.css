@@ -11,6 +11,8 @@ th.desc a {
     background-image: url(../images/skin/sorted_desc.gif);
 }
 
-.right {
+table.aui > tbody > tr > td.right {
     text-align: right !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
 }
