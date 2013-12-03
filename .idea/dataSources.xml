@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" hash="1432657112">
-    <data-source source="LOCAL" name="SQLite test" product="SQLite" version="3.7.2" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" uuid="6fe11a0f-dfd2-455f-9faf-f59ec98f8011">
+    <data-source source="LOCAL" name="SQLite test" uuid="6fe11a0f-dfd2-455f-9faf-f59ec98f8011">
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../db/zinal.db</jdbc-url>
@@ -12,8 +13,8 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="H2 dev" product="H2" version="1.3.164 (2012-02-03)" jdbc-version="3.0" driver-name="H2 JDBC Driver" driver-version="1.3.164 (2012-02-03)" uuid="5636198c-8b41-4877-a7a4-cb97ff7cc11e">
-      <identifier-quote-string>&quot;</identifier-quote-string>
+    <data-source source="LOCAL" name="H2 dev" uuid="5636198c-8b41-4877-a7a4-cb97ff7cc11e">
+      <driver-ref>h2.embedded</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:$PROJECT_DIR$/devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;AUTO_SERVER=TRUE;</jdbc-url>
