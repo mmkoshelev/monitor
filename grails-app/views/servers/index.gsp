@@ -19,7 +19,7 @@
                         Новый сервер
                     </button>
                     <button id="import-db-btn" type="button" class="aui-button">
-                        <span class="aui-icon aui-icon-small aui-iconfont-share">import</span>
+                        <span class="aui-icon aui-icon-small aui-iconfont-devtools-clone">import</span>
                         Импорт базы
                     </button>
                 </div>
@@ -45,13 +45,19 @@
                                 <td>${server.code}</td>
                                 <td>${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}</td>
                                 <td class="right">
-                                    <g:form action="delete" method="post">
+                                    <g:form action="delete" method="post" class="noblock margin-right5">
                                         <g:hiddenField name="id" value="${server.id}" />
                                         <button type="submit" class="aui-button aui-button-link" title="Удалить"
                                                 onclick="return confirm('Удалить сервер и все данные?');">
                                             <span class="aui-icon aui-icon-small aui-iconfont-remove">remove</span>
                                         </button>
                                     </g:form>
+                                    <g:link url="config" class="aui-button aui-button-link margin-right5" title="Конфигурация">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-configure"></span></g:link>
+                                    <g:link url="dirs" class="aui-button aui-button-link margin-right5" title="Контрольная информация">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-devtools-folder-open"></span></g:link>
+                                    <g:link url="details" class="aui-button aui-button-link margin-right5" title="Просмотр">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-share"></span></g:link>
                                 </td>
                             </tr>
                         </g:each>

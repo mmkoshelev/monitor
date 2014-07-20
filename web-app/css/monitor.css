@@ -16,3 +16,11 @@ table.aui > tbody > tr > td.right {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
 }
+
+.noblock {
+    display: inline !important;
+}
+
+.margin-right5 {
+    margin-right: 5px;
+}
