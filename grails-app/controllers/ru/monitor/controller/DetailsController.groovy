@@ -7,5 +7,7 @@ package ru.monitor.controller
  */
 class DetailsController {
 
-    def index() {}
+    def index() {
+        render "Просмотр"
+    }
 }

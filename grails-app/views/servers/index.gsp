@@ -52,11 +52,11 @@
                                             <span class="aui-icon aui-icon-small aui-iconfont-remove">remove</span>
                                         </button>
                                     </g:form>
-                                    <g:link url="config" class="aui-button aui-button-link margin-right5" title="Конфигурация">
+                                    <g:link controller="config" id="${server.code}" class="aui-button aui-button-link margin-right5" title="Конфигурация">
                                         <span class="aui-icon aui-icon-small aui-iconfont-configure"></span></g:link>
-                                    <g:link url="dirs" class="aui-button aui-button-link margin-right5" title="Контрольная информация">
+                                    <g:link controller="dirs" id="${server.code}" class="aui-button aui-button-link margin-right5" title="Контрольная информация">
                                         <span class="aui-icon aui-icon-small aui-iconfont-devtools-folder-open"></span></g:link>
-                                    <g:link url="details" class="aui-button aui-button-link margin-right5" title="Просмотр">
+                                    <g:link controller="details" id="${server.code}" class="aui-button aui-button-link margin-right5" title="Просмотр">
                                         <span class="aui-icon aui-icon-small aui-iconfont-share"></span></g:link>
                                 </td>
                             </tr>

@@ -1,11 +1,13 @@
 package ru.monitor.controller
 
 /**
- * Отображение контрольных дирректирий серверов проверки
+ * Отображение контрольных директирий серверов проверки
  *
  * @since 0.2
  */
 class DirsController {
 
-    def index() {}
+    def index() {
+        render "Контрольная информация"
+    }
 }

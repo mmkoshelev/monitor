@@ -20,5 +20,7 @@ class MonitorGroup {
     static mapping = {
         name index: "mg_name_si_idx"
         serverItem index:  "mg_name_si_idx"
+        monitorItems lazy: false
+        groups lazy: false
     }
 }

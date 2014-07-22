@@ -15,4 +15,8 @@ class MonitorItem {
 
     static constraints = {
     }
+
+    static mapping = {
+        patts lazy: false
+    }
 }
