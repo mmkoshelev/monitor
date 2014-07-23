@@ -1,7 +1,4 @@
 package ru.monitor
-
-import groovy.transform.CompileStatic
-
 /**
  * Типы шаблонов
  *

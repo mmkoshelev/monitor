@@ -1,8 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="ru.monitor.PattType" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Конфигурация сервера проверки</title>
     <meta name="layout" content="auimain" />
+    <script src="${resource(dir: 'js/config', file: 'index.js')}"></script>
 </head>
 <body>
     <div class="aui-page-header">
@@ -49,7 +50,9 @@
                                                   <td style="width: 620px;">${item.path}</td>
                                                   <td>
                                                       <g:each in="${item.patts}" var="patt">
-                                                          ${patt.pattern}
+                                                          <a href="javascript:return false;" class="shw-type-btn"
+                                                             data-text='<ul style="list-style-type: circle;"><li>${PattType.getByValueSet(patt.flags).name.join("</li><li>")}</li></ul>'>
+                                                              <span class="aui-icon aui-icon-small aui-iconfont-share">show</span> ${patt.pattern}</a>
                                                           <br/>
                                                       </g:each>
                                                   </td>
