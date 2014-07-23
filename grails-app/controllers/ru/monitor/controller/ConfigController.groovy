@@ -17,6 +17,6 @@ class ConfigController {
             return redirect(controller: "servers", action: "index")
         }
 
-        return [groups: serverItem.groups.sort({it.name})]
+        return [groups: serverItem.groups]
     }
 }

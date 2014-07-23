@@ -18,5 +18,6 @@ class MonitorItem {
 
     static mapping = {
         patts lazy: false
+        patts sort: "pattern"
     }
 }

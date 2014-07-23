@@ -18,5 +18,6 @@ class ServerItem {
 
     static mapping = {
         checkRuns lazy: false
+        groups sort: "name"
     }
 }

@@ -22,5 +22,6 @@ class MonitorGroup {
         serverItem index:  "mg_name_si_idx"
         monitorItems lazy: false
         groups lazy: false
+        monitorItems sort: "path"
     }
 }
