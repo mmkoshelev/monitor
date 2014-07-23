@@ -43,7 +43,11 @@
                             <tr>
                                 <td>${server.name}</td>
                                 <td>${server.code}</td>
-                                <td>${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}</td>
+                                <td>
+                                    <span class="aui-lozenge aui-lozenge-${serverStatuses[server.code] ? 'success' : 'error'}">
+                                        ${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}
+                                    </span>
+                                </td>
                                 <td class="right">
                                     <g:form action="delete" method="post" class="noblock margin-right5">
                                         <g:hiddenField name="id" value="${server.id}" />

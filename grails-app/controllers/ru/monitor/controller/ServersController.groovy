@@ -3,6 +3,7 @@ package ru.monitor.controller
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import ru.monitor.exception.MonitorException
+import ru.monitor.model.CheckFile
 import ru.monitor.model.ServerItem
 import ru.monitor.util.LogUtil
 
@@ -30,18 +31,21 @@ class ServersController {
             }
 
             def lastChecks = [:]
+            def serverStatuses = [:]
             for (server in servers) {
-                lastChecks[server.code] = server.checkRuns.sort({a, b -> b.runDate <=> a.runDate }).find()?.runDate
+                def lastCheck = server.checkRuns.sort({a, b -> b.runDate <=> a.runDate }).find()
+                lastChecks[server.code] = lastCheck?.runDate
+                serverStatuses[server.code] = CheckFile.countByCheckRun(lastCheck) == 0
             }
 
-            return [servers: servers, lastChecks: lastChecks]
+            return [servers: servers, lastChecks: lastChecks, serverStatuses: serverStatuses]
         } catch (Exception ex) {
             LogUtil.error(request, "Ошибка отображения серверов проверки", ex, log)
         }
     }
 
     def quicksearch(String quicksearch) {
-        def qs = ServerItem.findAllByCodeLikeOrNameLike("%${quicksearch}%", "%${quicksearch}%")
+        def qs = ServerItem.findAllByCodeIlikeOrNameIlike("%${quicksearch}%", "%${quicksearch}%")
         flash.quicksearch = qs
         flash.quicksearchtext = quicksearch
         return redirect(action: "index")
