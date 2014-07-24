@@ -15,4 +15,8 @@ class EtalonDir {
 
     static constraints = {
     }
+
+    static mapping = {
+        etalonFiles sort: "name"
+    }
 }
