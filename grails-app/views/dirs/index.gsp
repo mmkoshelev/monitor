@@ -26,10 +26,10 @@
                 <table class="aui">
                     <thead>
                         <tr>
-                            <td>№</td>
-                            <td>Директория</td>
-                            <td>Количество файлов</td>
-                            <td>&nbsp;</td>
+                            <th>№</th>
+                            <th>Директория</th>
+                            <th>Количество файлов</th>
+                            <th style="width: 16px">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,10 @@
                                 <td>${params.int("offset", 0) + status + 1}</td>
                                 <td>${dir.name}</td>
                                 <td>${etalonCountsByDirs.get(dir.id)}</td>
-                                <td>&nbsp;</td>
+                                <td class="right">
+                                    <g:link action="files" id="${dir.id}" class="aui-button aui-button-link margin-right5" title="Просмотр файлов">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-share"></span></g:link>
+                                </td>
                             </tr>
                         </g:each>
                    </tbody>

@@ -27,9 +27,9 @@
                 <table class="aui">
                     <thead>
                         <tr>
-                            <td>Группа</td>
-                            <td style="width: 600px">Директории</td>
-                            <td>Правила проверки</td>
+                            <th>Группа</th>
+                            <th style="width: 600px">Директории</th>
+                            <th>Правила проверки</th>
                         </tr>
                     </thead>
                     <tbody>

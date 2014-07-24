@@ -32,4 +32,8 @@ class DirsController {
         }.collectEntries({new MapEntry(it[0], it[1])})
         [dirs: dirs, dirsCount: edQuery.count(), etalonCountsByDirs: etalonCountsByDirs]
     }
+
+    def files() {
+
+    }
 }
