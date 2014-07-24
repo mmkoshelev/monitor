@@ -27,7 +27,7 @@ class DirsController {
         def etalonCountsByDirs = EtalonFile.createCriteria().list {
             inList("etalonDir.id", dirs.id)
             projections {
-                sqlGroupProjection "etalon_dir_id as etalondirid, count(*) as efcount", "etalon_dir_id", ["etalondirid", "efcount"], [INTEGER, INTEGER]
+                sqlGroupProjection "etalon_dir_id as etalondirid, count(*) as efcount", "etalon_dir_id", ["etalondirid", "efcount"], [LONG, LONG]
             }
         }.collectEntries({new MapEntry(it[0], it[1])})
         [dirs: dirs, dirsCount: edQuery.count(), etalonCountsByDirs: etalonCountsByDirs]

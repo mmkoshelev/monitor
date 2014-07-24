@@ -37,7 +37,7 @@
                             <tr>
                                 <td>${params.int("offset", 0) + status + 1}</td>
                                 <td>${dir.name}</td>
-                                <td>${etalonCountsByDirs.get((int)dir.id)}</td>
+                                <td>${etalonCountsByDirs.get(dir.id)}</td>
                                 <td>&nbsp;</td>
                             </tr>
                         </g:each>
