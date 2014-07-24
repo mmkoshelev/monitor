@@ -23,7 +23,24 @@
     <div class="aui-page-panel">
         <div class="aui-page-panel-inner">
             <div class="aui-page-panel-content">
-
+                <table class="aui">
+                    <thead>
+                        <tr>
+                            <td>Директория</td>
+                            <td>Количество файлов</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <g:each in="${dirs}" var="dir">
+                            <tr>
+                                <td>${dir.name}</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </g:each>
+                   </tbody>
+                </table>
             </div>
         </div>
     </div>
