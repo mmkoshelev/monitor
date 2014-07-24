@@ -8,6 +8,6 @@ package ru.monitor.controller
 class DetailsController {
 
     def index() {
-        render "Просмотр"
+
     }
 }

@@ -8,6 +8,6 @@ package ru.monitor.controller
 class DirsController {
 
     def index() {
-        render "Контрольная информация"
+
     }
 }
