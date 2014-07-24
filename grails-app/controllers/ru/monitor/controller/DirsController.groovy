@@ -34,12 +34,16 @@ class DirsController {
     }
 
     def files(long id) {
-        def etalonDir = EtalonDir.get(id)
-        if (!etalonDir) {
+        def dir = EtalonDir.get(id)
+        if (!dir) {
             LogUtil.error(flash, "Не найдена контрольная директория с идентификатором [${id}]", null, log)
             return redirect(controller: "servers", action: "index")
         }
 
-        [server: etalonDir.group.serverItem, dir: etalonDir, files: etalonDir.etalonFiles]
+        params.sort = "name"
+        params.max = params.max ?: 10
+        def fQuery = EtalonFile.where {etalonDir.id == dir.id}
+        def files = fQuery.list(params)
+        [server: dir.group.serverItem, dir: dir, files: files, filesCount: fQuery.count()]
     }
 }

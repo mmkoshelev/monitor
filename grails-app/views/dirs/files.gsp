@@ -45,6 +45,10 @@
                     </g:each>
                 </tbody>
             </table>
+            <div class="pagination">
+                <g:paginate total="${filesCount}" id="${dir.id}" omitNext="true" omitPrev="true" />
+                <div>Всего записей: ${filesCount}</div>
+            </div>
         </div>
     </div>
 </div>
