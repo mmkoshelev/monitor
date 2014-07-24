@@ -18,8 +18,9 @@ class DirsController {
             return redirect(controller: "servers", action: "index")
         }
 
-        def groupIds = serverItem.groups.id
-        def edQuery = EtalonDir.where { group.id in groupIds }
-        [dirs: edQuery.list(sort: "name")]
+        params.sort = "name"
+        params.max = params.max ?: 10
+        def edQuery = EtalonDir.where { group.id in serverItem.groups.id }
+        [dirs: edQuery.list(params), dirsCount: edQuery.count()]
     }
 }

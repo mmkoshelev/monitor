@@ -26,14 +26,16 @@
                 <table class="aui">
                     <thead>
                         <tr>
+                            <td>№</td>
                             <td>Директория</td>
                             <td>Количество файлов</td>
                             <td>&nbsp;</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <g:each in="${dirs}" var="dir">
+                        <g:each in="${dirs}" var="dir" status="status">
                             <tr>
+                                <td>${params.int("offset", 0) + status + 1}</td>
                                 <td>${dir.name}</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
@@ -41,6 +43,10 @@
                         </g:each>
                    </tbody>
                 </table>
+                <div class="pagination">
+                    <g:paginate total="${dirsCount}" id="${params.id}" omitNext="true" omitPrev="true" />
+                    <div>Всего записей: ${dirsCount}</div>
+                </div>
             </div>
         </div>
     </div>
