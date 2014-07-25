@@ -45,16 +45,14 @@
                             <table>
                                 <g:each in="${file.checkAces}" var="ace">
                                     <tr>
-                                        %{--<td style="border: 0;">--}%
-                                            %{--<c:choose>--}%
-                                                %{--<c:when test="${ace.diff == 1}">--}%
-                                                    %{--<img src="img/add.png" alt="Атрибут добален" title="Атрибут добален" />--}%
-                                                %{--</c:when>--}%
-                                                %{--<c:when test="${ace.diff == 2}">--}%
-                                                    %{--<img src="img/remove.png" alt="Атрибут удален" title="Атрибут удален" />--}%
-                                                %{--</c:when>--}%
-                                            %{--</c:choose>--}%
-                                        %{--</td>--}%
+                                        <td>
+                                            <g:if test="${ace.diff == 1}">
+                                                <span title="Атрибут добален" class="aui-icon aui-icon-small aui-iconfont-add">Add</span>
+                                            </g:if>
+                                            <g:else>
+                                                <span title="Атрибут удален" class="aui-icon aui-icon-small aui-iconfont-devtools-task-disabled">Delete</span>
+                                            </g:else>
+                                        </td>
                                         <td class="small-inner-table">${AceType.getByValue(ace.mode).name}</td>
                                         <td class="small-inner-table">${ace.value}</td>
                                         <td class="small-inner-table">${ace.trustee ?: "?"}</td>
