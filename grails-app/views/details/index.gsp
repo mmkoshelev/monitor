@@ -60,8 +60,9 @@
                                 </g:each>
                             </table>
                         </td>
-                        <td>
-                            <a href="#cmpaces" id="cmp-ace-${i}" data-id="${file.id}" data-code="${code}">Сравнить</a>
+                        <td style="width: 16px">
+                            <a href="#cmpaces" id="cmp-ace-${status}" data-id="${file.id}" data-code="${params.id}">
+                                <span title="Сравнить" class="aui-icon aui-icon-small aui-iconfont-build">Сравнить</span></a>
                         </td>
                     </tr>
                 </g:each>
