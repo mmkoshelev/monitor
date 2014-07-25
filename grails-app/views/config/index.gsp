@@ -27,14 +27,16 @@
                 <table class="aui">
                     <thead>
                         <tr>
+                            <th>№</th>
                             <th>Группа</th>
                             <th style="width: 600px">Директории</th>
                             <th>Правила проверки</th>
                         </tr>
                     </thead>
                     <tbody>
-                       <g:each in="${groups}" var="group">
+                       <g:each in="${groups}" var="group" status="status">
                           <tr>
+                              <td>${status + 1}</td>
                               <td>${group.name}</td>
                               <g:if test="${group.groups.size() > 0}">
                                   <td colspan="2">

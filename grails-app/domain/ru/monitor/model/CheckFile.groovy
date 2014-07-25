@@ -16,4 +16,8 @@ class CheckFile {
 
     static constraints = {
     }
+
+    static mapping = {
+        checkAces sort: "trustee"
+    }
 }

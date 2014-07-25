@@ -15,4 +15,8 @@ class CheckRun {
 
     static constraints = {
     }
+
+    static mapping = {
+        checkFiles sort: "etalonDir.name"
+    }
 }

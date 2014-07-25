@@ -32,6 +32,7 @@
                 <table class="aui">
                     <thead>
                     <tr>
+                        <th>№</th>
                         <g:sortableColumn property="name" title="Наименование" />
                         <g:sortableColumn property="code" title="Код компонента" />
                         <th>Дата последней проверки</th>
@@ -39,8 +40,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <g:each in="${servers}" status="i" var="server">
+                        <g:each in="${servers}" status="status" var="server">
                             <tr>
+                                <td>${status + 1}</td>
                                 <td>${server.name}</td>
                                 <td>${server.code}</td>
                                 <td>
