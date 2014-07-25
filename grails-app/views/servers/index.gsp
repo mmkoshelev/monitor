@@ -67,6 +67,11 @@
                                 </td>
                             </tr>
                         </g:each>
+                        <g:if test="${!servers}">
+                            <tr>
+                                <td colspan="5">Нет данных</td>
+                            </tr>
+                        </g:if>
                     </tbody>
                 </table>
             </div>

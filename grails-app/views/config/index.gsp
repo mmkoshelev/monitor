@@ -65,6 +65,11 @@
                               </g:else>
                           </tr>
                        </g:each>
+                       <g:if test="${!groups}">
+                           <tr>
+                               <td colspan="4">Нет данных</td>
+                           </tr>
+                       </g:if>
                     </tbody>
                 </table>
             </div>

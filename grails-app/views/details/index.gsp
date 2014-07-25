@@ -68,6 +68,11 @@
                         </td>
                     </tr>
                 </g:each>
+                <g:if test="${!files}">
+                    <tr>
+                        <td colspan="6">Нет данных</td>
+                    </tr>
+                </g:if>
                 </tbody>
             </table>
         </div>

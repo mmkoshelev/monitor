@@ -53,6 +53,11 @@
                             </td>
                         </tr>
                     </g:each>
+                    <g:if test="${!files}">
+                        <tr>
+                            <td colspan="5">Нет данных</td>
+                        </tr>
+                    </g:if>
                 </tbody>
             </table>
             <div class="pagination">

@@ -44,6 +44,11 @@
                                 </td>
                             </tr>
                         </g:each>
+                        <g:if test="${!dirs}">
+                            <tr>
+                                <td colspan="4">Нет данных</td>
+                            </tr>
+                        </g:if>
                    </tbody>
                 </table>
                 <div class="pagination">
