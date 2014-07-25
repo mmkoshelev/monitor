@@ -1,14 +1,14 @@
 <%@ page import="ru.monitor.AceType" contentType="text/html;charset=UTF-8" %>
 <h5>Исходные ACE</h5>
 <table>
-    <g:each in="${etalonFile.etalonAce}" var="ace">
+    <g:each in="${etalonFile?.etalonAce}" var="ace">
         <tr>
             <td class="small-inner-table">${AceType.getByValue(ace.mode).name}</td>
             <td class="small-inner-table">${ace.value}</td>
             <td class="small-inner-table">${ace.trustee ?: "?"}</td>
         </tr>
     </g:each>
-    <g:if test="${!etalonFile.etalonAce}">
+    <g:if test="${!etalonFile?.etalonAce}">
         <tr>
             <td>Нет данных</td>
         </tr>
