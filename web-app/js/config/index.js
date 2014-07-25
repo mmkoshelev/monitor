@@ -12,12 +12,10 @@ function addTypeDialog() {
         var $this = AJS.$(this);
         AJS.InlineDialog($this, 1,
             function(content, trigger, showPopup) {
-                content.css({"padding":"20px"}).html($this.data("text"));
+                content.css({"padding":"10px"}).html($this.data("text"));
                 showPopup();
                 return false;
             }
         );
     });
-
-
 }

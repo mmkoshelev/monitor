@@ -3,6 +3,7 @@
 <head>
     <title>Информация о проведенной проверке</title>
     <meta name="layout" content="auimain" />
+    <script src="${resource(dir: 'js/details', file: 'index.js')}"></script>
 </head>
 <body>
 <div class="aui-page-header">
@@ -47,7 +48,7 @@
                                     <tr>
                                         <td>
                                             <g:if test="${ace.diff == 1}">
-                                                <span title="Атрибут добален" class="aui-icon aui-icon-small aui-iconfont-add">Add</span>
+                                                <span title="Атрибут добавлен" class="aui-icon aui-icon-small aui-iconfont-add">Add</span>
                                             </g:if>
                                             <g:else>
                                                 <span title="Атрибут удален" class="aui-icon aui-icon-small aui-iconfont-devtools-task-disabled">Delete</span>
@@ -61,8 +62,9 @@
                             </table>
                         </td>
                         <td style="width: 16px">
-                            <a href="#cmpaces" id="cmp-ace-${status}" data-id="${file.id}" data-code="${params.id}">
-                                <span title="Сравнить" class="aui-icon aui-icon-small aui-iconfont-build">Сравнить</span></a>
+                            <a href="javascript: return false;" id="cmp-ace-${status}"
+                               data-id="${file.id}" data-url="${createLink(action: "compare")}">
+                                <span title="Сравнить" class="aui-icon aui-icon-small aui-iconfont-build">Сравнить ACE</span></a>
                         </td>
                     </tr>
                 </g:each>
