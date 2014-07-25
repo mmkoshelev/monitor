@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="ru.monitor.AceType" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Контрольная информация</title>
@@ -40,7 +40,17 @@
                             <td>${file.name}</td>
                             <td>${file.hash}</td>
                             <td>${file.size}</td>
-                            <td></td>
+                            <td>
+                                <table>
+                                    <g:each in="${file.etalonAce}" var="ace">
+                                        <tr>
+                                            <td style="padding:0;width:33%;border: 0;">${AceType.getByValue(ace.mode).name}</td>
+                                            <td style="padding:0;width:33%;border: 0;">${ace.value}</td>
+                                            <td style="padding:0;width:33%;border: 0;">${ace.trustee ?: "?"}</td>
+                                        </tr>
+                                    </g:each>
+                                </table>
+                            </td>
                         </tr>
                     </g:each>
                 </tbody>

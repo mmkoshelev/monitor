@@ -17,4 +17,9 @@ class EtalonFile {
 
     static constraints = {
     }
+
+    static mapping = {
+        etalonAce lazy: false
+        etalonAce sort: "trustee"
+    }
 }
