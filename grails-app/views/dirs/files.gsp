@@ -44,9 +44,9 @@
                                 <table>
                                     <g:each in="${file.etalonAce}" var="ace">
                                         <tr>
-                                            <td style="padding:0;width:33%;border: 0;">${AceType.getByValue(ace.mode).name}</td>
-                                            <td style="padding:0;width:33%;border: 0;">${ace.value}</td>
-                                            <td style="padding:0;width:33%;border: 0;">${ace.trustee ?: "?"}</td>
+                                            <td class="small-inner-table">${AceType.getByValue(ace.mode).name}</td>
+                                            <td class="small-inner-table">${ace.value}</td>
+                                            <td class="small-inner-table">${ace.trustee ?: "?"}</td>
                                         </tr>
                                     </g:each>
                                 </table>

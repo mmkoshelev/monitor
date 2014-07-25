@@ -66,3 +66,10 @@ table.aui > tbody > tr > td.right {
     color: #444444;
     text-decoration: underline;
 }
+
+
+.small-inner-table {
+    padding:0 3px 0 0;
+    width:33%;
+    vertical-align: top;
+}
