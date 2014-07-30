@@ -47,7 +47,7 @@
                                 <td>${server.code}</td>
                                 <td>
                                     <span class="aui-lozenge aui-lozenge-${serverStatuses[server.code] ? 'success' : 'error'}">
-                                        ${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss")}
+                                        ${lastChecks[server.code]?.format("dd.MM.yyyy HH:mm:ss") ?: "Не было проверки"}
                                     </span>
                                 </td>
                                 <td class="right">
