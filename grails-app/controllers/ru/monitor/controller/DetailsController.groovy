@@ -12,7 +12,7 @@ import ru.monitor.util.LogUtil
  */
 class DetailsController {
 
-    //static allowedMethods = [compare: "POST"]
+    static allowedMethods = [compare: "POST"]
 
     def index(String id) {
         def checkRun;

@@ -16,8 +16,8 @@ function addTypeDialog() {
                 var id = $this.data("id");
                 AJS.$.post(url, {id: id}, function(data) {
                     content.css({"padding":"10px"}).html(data);
-                }).error(function() {
-                    content.css({"padding":"10px"}).html("<div class=''>Ошибка доступа к сервису</div>");
+                }).error(function(status) {
+                    content.css({"padding":"10px"}).html("Ошибка доступа к сервису: " + status.statusText);
                 });
                 showPopup();
                 return false;
