@@ -6,7 +6,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../db/zinal.db</jdbc-url>
-      <schema-pattern>*</schema-pattern>
       <libraries>
         <library>
           <url>file://$PROJECT_DIR$/../issps/trunk/monitor/lib/sqlitejdbc.jar</url>
@@ -18,8 +17,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:$PROJECT_DIR$/devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;AUTO_SERVER=TRUE;</jdbc-url>
-      <user-name>sa</user-name>
-      <schema-pattern>*</schema-pattern>
       <libraries>
         <library>
           <url>jar://$PROJECT_DIR$/../libs/grails-2.2.2/dist/grails-2.2.2.jar!/</url>
@@ -436,4 +433,3 @@
     </data-source>
   </component>
 </project>
-
